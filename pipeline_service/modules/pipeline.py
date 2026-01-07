@@ -196,27 +196,30 @@ class GenerationPipeline:
             image_edited = self.qwen_edit.edit_image(
                 prompt_image=image,
                 seed=request.seed,
-                prompt="Show this object in left three-quarters view and make sure it is fully visible. Turn background black color contrasting with an object. Keep object colors and shape and texture. Keep extra near objects of background. Sharpen image details",
+                prompt="Show this object in left three-quarters view and make sure it is fully visible. Turn background black color contrasting with an object. Delete background details. Delete watermarks. Keep object colors. Sharpen image details",
             )
 
             # 2. Remove background
-            image_without_background = self.rmbg.remove_background(image_edited)
+            # image_without_background = self.rmbg.remove_background(image_edited)
+            image_without_background = image_edited
 
             # add another view of the image
             image_edited_2 = self.qwen_edit.edit_image(
                 prompt_image=image,
                 seed=request.seed,
-                prompt="Show this object in right three-quarters view and make sure it is fully visible. Turn background black color contrasting with an object. Keep object colors and shape and texture. Keep extra near objects of background. Sharpen image details",
+                prompt="Show this object in right three-quarters view and make sure it is fully visible. Turn background black color contrasting with an object. Delete background details. Delete watermarks. Keep object colors. Sharpen image details",
             )
-            image_without_background_2 = self.rmbg.remove_background(image_edited_2)
+            # image_without_background_2 = self.rmbg.remove_background(image_edited_2)
+            image_without_background_2 = image_edited_2
             
             # add another view of the image
             image_edited_3 = self.qwen_edit.edit_image(
                 prompt_image=image,
                 seed=request.seed,
-                prompt="Show this object in back view and make sure it is fully visible. Turn background black color contrasting with an object. Keep object colors and shape and texture. Keep extra near objects of background. Sharpen image details",
+                prompt="Show this object in back view and make sure it is fully visible. Turn background black color contrasting with an object. Delete background details. Delete watermarks. Keep object colors. Sharpen image details",
             )
-            image_without_background_3 = self.rmbg.remove_background(image_edited_3)
+            # image_without_background_3 = self.rmbg.remove_background(image_edited_3)
+            image_without_background_3 = image_edited_3
 
             trellis_result: Optional[TrellisResult] = None
 
